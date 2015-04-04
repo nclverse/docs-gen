@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="56px" height="64px" viewBox="0 0 56 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: "Sketch Internal" 3.0 (7561) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle 496 + Universe 7</title>
+    <description>Created with "Sketch Internal".</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Rectangle-496-+-Universe-7" sketch:type="MSLayerGroup">
+            <path d="M0,0 L0,64 L48.0063223,64 C52.4211086,64 56,60.421945 56,55.9914846 L56,8.0085154 C56,3.58553448 52.4117595,0 48.0063223,0 L0,0 Z M2,2 L2,62 L47.0005529,62 C50.8662408,62 54,58.8586174 54,54.9998109 L54,9.00018913 C54,5.13409143 50.8642711,2 47.0005529,2 L2,2 Z" id="Rectangle-496" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+            <g id="Universe-7" transform="translate(28.720196, 31.676941) rotate(-60.000000) translate(-28.720196, -31.676941) translate(9.720196, 12.676941)" sketch:type="MSShapeGroup">
+                <g id="Group" transform="translate(0.123048, 0.061344)" fill="#70BCD2">
+                    <ellipse id="Oval-2" cx="3.32230014" cy="7.17729268" rx="1.66115007" ry="1.65629831"></ellipse>
+                    <ellipse id="Oval-3" cx="24.6096307" cy="1.65629831" rx="1.66115007" ry="1.65629831"></ellipse>
+                    <ellipse id="Oval-4" cx="36.3607293" cy="19.1394472" rx="1.66115007" ry="1.65629831"></ellipse>
+                    <ellipse id="Oval-5" cx="1.66115007" cy="28.0957269" rx="1.66115007" ry="1.65629831"></ellipse>
+                    <ellipse id="Oval-6" cx="22.2101917" cy="35.825119" rx="1.23048153" ry="1.22688764"></ellipse>
+                </g>
+                <g id="Group" transform="translate(0.000000, 2.699153)" stroke="#323F52" stroke-width="3.6">
+                    <path d="M8.39803647,22.3906994 C14.7690632,22.3906994 19.3185601,17.8544904 19.3185601,11.5020716 C19.3185601,5.14965287 14.1538224,-1.0658141e-14 7.7827957,-1.0658141e-14" id="Oval-79" stroke-linecap="round" stroke-linejoin="round" transform="translate(13.535297, 11.226022) scale(-1, 1) translate(-13.535297, -11.226022) "></path>
+                    <path d="M18.3988505,29.0985241 C24.7698772,29.0985241 29.9346149,23.9488712 29.9346149,17.5964525 C29.9346149,11.2440337 24.7698772,6.09438084 18.3988505,6.09438084" id="Oval-81" stroke-linecap="round" stroke-linejoin="round" transform="translate(24.151352, 17.627125) scale(-1, 1) rotate(-144.000000) translate(-24.151352, -17.627125) "></path>
+                    <ellipse id="Oval-84" cx="18.9494156" cy="15.8268505" rx="6.15240767" ry="6.13443819"></ellipse>
+                    <path d="M15.6484165,21.5008689 C22.0194432,21.5008689 27.1841809,16.3512161 27.1841809,9.99879732 C27.1841809,3.64637858 22.0194432,-1.50327429 15.6484165,-1.50327429" id="Oval-80" stroke-linecap="round" stroke-linejoin="round" transform="translate(21.400918, 10.029470) scale(-1, 1) rotate(-72.000000) translate(-21.400918, -10.029470) "></path>
+                    <path d="M13.8460688,34.0060746 C20.2170956,34.0060746 25.3818332,28.8564217 25.3818332,22.504003 C25.3818332,16.1515843 20.2170956,11.0019314 13.8460688,11.0019314" id="Oval-82" stroke-linecap="round" stroke-linejoin="round" transform="translate(19.598570, 22.534675) scale(-1, 1) rotate(-216.000000) translate(-19.598570, -22.534675) "></path>
+                    <path d="M7.03504576,30.5798375 C13.4060725,30.5798375 18.5708101,25.4301846 18.5708101,19.0777658 C18.5708101,12.7253471 13.4060725,7.57569423 7.03504576,7.57569423" id="Oval-83" stroke-linecap="round" stroke-linejoin="round" transform="translate(12.787547, 19.108438) scale(-1, 1) rotate(-288.000000) translate(-12.787547, -19.108438) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

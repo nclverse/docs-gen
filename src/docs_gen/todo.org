@@ -1,0 +1,5 @@
+To do list
+
+* Main page with number of lines written statistics
+* Base URL for Github Pages
+

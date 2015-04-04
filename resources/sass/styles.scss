@@ -1,0 +1,61 @@
+@import "../../../docs-css/colors";
+@import "../../../docs-css/main";
+@import "../../../docs-css/mixins";
+
+$read-area-background: $dark-slate;
+$read-area-color: $paper;
+$sidebar-bg: $light-slate;
+$sidebar-primary: $paper;
+$sidebar-secondary: $paper;
+
+body {
+
+    background: $darkblue;
+
+}
+
+#read-area {
+    background: $read-area-background;
+    color: $read-area-color;
+}
+
+#sidebar {
+
+    color: $sidebar-secondary;
+    background: $sidebar-bg;
+
+    header#title {
+
+        h1 {
+            color: $sidebar-primary;
+        }
+
+        }
+
+    nav a {
+            color: $paper;
+    }
+}
+
+
+.post {
+
+
+    #table-of-contents {
+        a {
+            color: $paper;
+        }
+    }
+
+}
+
+.content {
+    width: 60%;
+    max-width: 60em;
+}
+
+.post-content {
+    &:before {
+        background: $medium-slate;
+    }
+}

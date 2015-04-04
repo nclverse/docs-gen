@@ -1,0 +1,30 @@
+   ;(defn grinder [page-map]
+   ;(let [pages (convert-org-pages (vals page-map))
+   ;links (map #(format-links % clean-org) (keys page-map))
+   ;word-counts (map word-count pages)
+   ;;cleaned-links (map clean-link links)
+   ;link-map (key-map-builder links word-counts pages)]
+   ;;category-map (reduce #(update-element %2 %1) [] link-map)]
+   ;(zipmap cleaned-links (map (partial build-page "Code") link-map links))))
+
+   (comment
+   (defn update-element [cat coll]
+   "Input: category [categories] -> [categories]"
+   (cond
+   (empty? cat) []
+   (empty? coll) (vec (conj coll cat))
+   :else (if (include cat (first coll))
+   (vec (conj (rest coll) (include cat (first coll))))
+   (vec (conj (update-element cat (rest coll)) (first coll))))))
+
+   (defn strip-org [link] (format-links link clean-org))
+
+   (defn clean-link [link] (str (clean-numbering (strip-org link)) "/"))
+   )
+
+
+   ;(def pages (stasis/merge-page-sources
+   ;{:styles 
+   ;:images (stasis/slurp-directory "resources/images/" #"\.svg$")
+   ;:pages (parse "resources/entries/")}))
+

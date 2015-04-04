@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Docs Generator</title>
+    <link type="text/css" rel="stylesheet" media="all" href="/styles.css" />
+  </head>
+  <body>
+    <section id="container">
+      <section id="sidebar"><nav id="main-nav">
+  <header id="title">
+    <img src="/blog-logo.svg" alt="logo" class="site-logo" />
+    <div class="titles">
+      <span class="verse-title">NCL<strong>Verse</strong></span>
+      <ul class="docs-site">
+        <li><a class="active">Code</a></li><li><a>Dissertation</a></li><li><a>Docs</a></li><li><a>Design</a></li>
+      </ul>
+    </div>
+    <div class="meta">
+      <p class="wc-aggregate">
+      </p>
+    </div>
+  </header>
+  <div class="category">
+    <header class="category-title"><h1>published<span class="word-count">360 words</span></h1></header>
+    <ul class="titles">
+      <li><a class="title-link">Architecture<span class="word-count">13 words</span></a>
+        <ul class="subtitles"><li> <a href="/published/architecture/hypothesis" class="subtitle-link">00 Hypothesis<span class="word-count">13</span></a></li></ul>
+      </li>
+      </ul><ul class="titles">
+      <li><a class="title-link active">Docs Generator<span class="word-count">347 words</span></a>
+        <ul class="subtitles"><li> <a href="/published/docs-generator/architecture" class="subtitle-link">Architecture<span class="word-count">32</span></a></li></ul><ul class="subtitles"><li> <a href="/published/docs-generator/overview" class="subtitle-link active">Overview<span class="word-count">276</span></a></li></ul><ul class="subtitles"><li> <a href="/published/docs-generator/roadmap" class="subtitle-link">Roadmap<span class="word-count">39</span></a></li></ul>
+      </li>
+      </ul>
+  </div><div class="category">
+    <header class="category-title"><h1>knowledge-repo<span class="word-count">3549 words</span></h1></header>
+    <ul class="titles">
+      <li><a class="title-link">Resources<span class="word-count">3549 words</span></a>
+        <ul class="subtitles"><li> <a href="/knowledge-repo/resources/threads" class="subtitle-link">Threads<span class="word-count">3549</span></a></li></ul>
+      </li>
+      </ul>
+  </div>
+
+</nav></section>
+      <section class="dissertation" id="read-area"><article class="post">
+  <section class="content">
+<div class="outline-1" id="outline-container-sec-1">
+<h1 id="sec-1">Docs Generator</h1>
+<div id="text-1" class="outline-text-1">
+<p>
+The architecture of doc generator is as simple as having a generator a
+set of org files transformed to a set of HTML pages served at the
+right location. This is mostly what the Docs Generator serves as.
+</p>
+
+<p>
+But inorder to accomplish that the generator has to do a bit of
+sitemap building, counting words and other stuff that is contextually
+relevant to each of the sites.
+</p>
+
+<p>
+So when you look at the NCLVerse environment, you can see that it
+consists of 4 types of documentation. How to use manuals intended for
+the user, design language for the visual designers interested in
+building UIs for the universe, code documentation that narrates how
+the code is documented in literate programming style and finally the
+dissertation that outlines the whole theoretical framework and ideas
+behind building this digital academic universe.
+</p>
+
+<p>
+Each of these documentation websites have their own set of
+requirements. Such as the word count is important in the dissertation
+whereas line count might be of interest in the code documentation
+website. Inorder to cater for all these different uses, it is of
+importance that the docs generator is sufficiently abstracted to cater
+to each of these cases and also flexible enough if a new use case is
+to be discovered in the future.
+</p>
+
+<p>
+I have tried to be not so clever in building up the abstractions
+because I am a new entrant in composing functions, but I have tried to
+put up an effort in the manner my knowledge served and what seemed
+logical. As always, all this code is available for your perusal in a
+literate programming manner, starting from the next entry.
+</p>
+</div>
+</div>
+</section>
+
+</article></section>
+    </section>
+  </body>
+
+</html>

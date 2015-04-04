@@ -1,0 +1,29 @@
+;(ns blog-gen.core
+;  (:require [stasis.core :as stasis]
+;            [ring.middleware.content-type :refer [wrap-content-type]]
+;            [ring.middleware.reload :refer [wrap-reload]]
+;            [clojure.java.shell :refer [sh]]
+;            [blog-gen.templates :as pages]))
+;
+;
+;(defn parse [dir] (pages/grinder (stasis/slurp-directory dir #"\.org$")))
+;
+;(def pages (stasis/merge-page-sources
+;            {:styles (stasis/slurp-directory "resources/css/" #".*\.css")
+;             :images (stasis/slurp-directory "resources/images/" #"\.svg$")
+;             :pages (parse "resources/entries/")}))
+;
+;(defn serve-page [ctx]
+;  (:uri ctx))
+;
+;(def app (-> (stasis/serve-pages ) wrap-content-type))
+;
+;;(defn export [target-dir]
+;  ;(stasis/empty-directory! target-dir)
+;  ;(stasis/export-pages pages target-dir))
+;
+;;(export "./public")
+;
+
+;(defn sass->css! [src dest] (:out (sh "sass" "--sourcemap=none" "--update" (str src ":" dest))))
+;(sass->css! "resources/sass/" "resources/css/")
