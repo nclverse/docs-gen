@@ -1,16 +1,16 @@
-#+options: toc:nil num:nil
+;; #+options: toc:nil num:nil
 
-* Namespaces
-  
-Usage of namespaces:
+;; * Namespaces
+;;   
+;; Usage of namespaces:
 
-Stasis: collecting directories and files.
-Ring middleware: Serving the correct content type.
-Prone Debug: Debugging Clojure code in the browser.
-Java Shell: Running Emacs to convert org files to HTML.
-Enlive: Metadata collection.
+;; Stasis: collecting directories and files.
+;; Ring middleware: Serving the correct content type.
+;; Prone Debug: Debugging Clojure code in the browser.
+;; Java Shell: Running Emacs to convert org files to HTML.
+;; Enlive: Metadata collection.
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 (ns docs-gen.render
   (:require [stasis.core :as stasis]
             [ring.middleware.content-type :refer [wrap-content-type]]
@@ -20,21 +20,21 @@ Enlive: Metadata collection.
             [docs-gen.transform :as transform])
   (:use net.cgrand.enlive-html))
 
-#+END_SRC
+;; #+END_SRC
 
-* Collector functions
-   
-#+BEGIN_SRC clojure
+;; * Collector functions
+;;    
+;; #+BEGIN_SRC clojure
 
 (defn collect-vals [key config] 
 (let [vals (map key (:sites config))]
 (when (every? (complement nil?) vals) vals)))
 
-#+END_SRC
+;; #+END_SRC
 
-* Configuration
+;; * Configuration
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 
 (def config {
 :mode :export
@@ -60,37 +60,37 @@ Enlive: Metadata collection.
 ;:output "/Users/Prabros/Dropbox/ncl/stage3/clojure/apps"}
 ]})
 
-#+END_SRC
+;; #+END_SRC
 
-* URL Helpers
-   
-Replaces .org with given string
-
-
+;; * URL Helpers
+;;    
+;; Replaces .org with given string
 
 
-* Org Converter
-    We convert each org page to HTML using Emacs.
-*** Org to HTML
-     This uses a script stored inside the resources directory to
-     convert org file to HTML using the config options specified per
-     file. Need to decide if a global org file config makes sense.
 
-#+BEGIN_SRC clojure
+
+;; * Org Converter
+;;     We convert each org page to HTML using Emacs.
+;; *** Org to HTML
+;;      This uses a script stored inside the resources directory to
+;;      convert org file to HTML using the config options specified per
+;;      file. Need to decide if a global org file config makes sense.
+
+;; #+BEGIN_SRC clojure
 
    (defn org->html [org-content]
    "Prerequisite: Emacs with Org-Mode installed.
    Converts given org file to html."
    (:out (sh "emacs" "--script" "resources/scripts/org-to-html.el" org-content)))
 
-#+END_SRC
+;; #+END_SRC
 
-* Metadata Collection Helpers
+;; * Metadata Collection Helpers
 
 
-*** Word Count
+;; *** Word Count
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 (defn word-count [entry]
    (let [nodes (select-nodes* (html-snippet entry) [text-node])
    text (apply str nodes)]
@@ -101,64 +101,64 @@ Replaces .org with given string
    text (apply str nodes)]
    (count (re-seq #"\n" text))))
 
-#+END_SRC
+;; #+END_SRC
 
-#+ATTR_HTML :class smell
-*** URL Components
-      Pretty contrived right now but supports all the current
-      documentation sites. Better to make this support. Need to
-      change this to support arbitrary amount of nesting. 5 seems like
-      a good limit if arbitrary nesting is a bad idea. Need to reflect
-      on this problem further.
+;; #+ATTR_HTML :class smell
+;; *** URL Components
+;;       Pretty contrived right now but supports all the current
+;;       documentation sites. Better to make this support. Need to
+;;       change this to support arbitrary amount of nesting. 5 seems like
+;;       a good limit if arbitrary nesting is a bad idea. Need to reflect
+;;       on this problem further.
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 (defn url-components [url]
   (zipmap [:category :title :subtitle] (filter not-empty (clojure.string/split url #"/"))))
-#+END_SRC
+;; #+END_SRC
 
-*** Find Title
+;; *** Find Title
 
-      Gets the title of the converted HTML page.
+;;       Gets the title of the converted HTML page.
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 (defn title [x]
   (first
    (select
    (html-snippet x) [:h1 text-node])))
-#+END_SRC
+;; #+END_SRC
 
-*** Weave metadata
+;; *** Weave metadata
 
-Collect metadata from HTML pages
-Creates a map of the form:
+;; Collect metadata from HTML pages
+;; Creates a map of the form:
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 
 (defn collect-meta-data [url page] {:page page :url (url-components url) :meta {:title (title page)}})
 
-#+END_SRC
+;; #+END_SRC
 
-* Renderers
-  
-   Recombining the pages that have been transformed and rendering them.
-   Comes in two flavours. One with meta data collection (involves
-   expensive computation, slows down the generator considerably) and one
-   without(quick).
+;; * Renderers
+;;   
+;;    Recombining the pages that have been transformed and rendering them.
+;;    Comes in two flavours. One with meta data collection (involves
+;;    expensive computation, slows down the generator considerably) and one
+;;    without(quick).
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 
 (defn quick-render [root site _ pages]
 (map #(transform/transform-page root site [] (collect-meta-data site (org->html %))) pages))
 
-#+END_SRC
+;; #+END_SRC
 
-*** Render with Meta
+;; *** Render with Meta
 
-    Weaves the metadata of all pages with the current page.
-    Gives out a map of url with the pages weaved with meta data.
-    
+;;     Weaves the metadata of all pages with the current page.
+;;     Gives out a map of url with the pages weaved with meta data.
+;;     
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 
 (defn nav-element [url page]
 (let [components (url-components url)
@@ -180,42 +180,42 @@ nav (nav-builder root site urls html-pages)]
 ({:quick #(quick-render root site %1 %2)
   :full #(full-render root site %1 %2)} mode))
 
-#+END_SRC
+;; #+END_SRC
 
-* Build Site Map
-  
-Builds a website.
+;; * Build Site Map
+;;   
+;; Builds a website.
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 
 (defn build-site [root render-mode {:keys [site metadata source output]}]
   (let [render-fn (renderer root site render-mode)
   assets (collect/collect-all site source render-fn)]
 assets))
 
-#+END_SRC
+;; #+END_SRC
 
 
-The progression is thus.
+;; The progression is thus.
 
-Collect -> Transform -> Render
+;; Collect -> Transform -> Render
 
-The first two stages are done here.
+;; The first two stages are done here.
 
-* Collecting Files
-#+BEGIN_SRC clojure
+;; * Collecting Files
+;; #+BEGIN_SRC clojure
 
 (defn collect-files [{:keys [sites mode render-mode] :as config}]
   (let [root (:root (mode config))]
     (stasis/merge-page-sources (apply merge-with into (map #(build-site root render-mode %) sites)))))
 
-#+END_SRC
+;; #+END_SRC
 
-* Finale
-  
-  Servers or exports the pages. A multimethod to either render or export based on the configuration.
+;; * Finale
+;;   
+;;   Servers or exports the pages. A multimethod to either render or export based on the configuration.
 
-#+BEGIN_SRC clojure
+;; #+BEGIN_SRC clojure
 
 (defmulti render :mode)
 
@@ -227,8 +227,8 @@ The first two stages are done here.
 
 (def app (render config))
 
-#+END_SRC
+;; #+END_SRC
 
-# Local Variables:
-# lentic-init: lentic-org-clojure-init
-# End:
+;; # Local Variables:
+;; # lentic-init: lentic-org-clojure-init
+;; # End:

@@ -1,0 +1,9 @@
+* Configuration Helpers
+
+#+BEGIN_SRC clojure
+
+(deftest config-helpers
+  (testing "Sites"
+    (letfn [(contains-key [keys] (fn [val] (some #(= % val) keys)))]
+      (is (every? (contains-key ["code" "dissertation" "design" "docs"]) (collect-vals :sites config))))))
+#+END_SRC

@@ -4,14 +4,18 @@
 
 (ns docs-gen.collect-test
   (:require [clojure.test :refer :all]
-            [docs-gen.collect :refer :all]
-            ;[docs-gen.render :refer [[config]]]
- :reload))
-
-
+            [docs-gen.collect :refer :all] :reload))
 ;; #+END_SRC
 
-;; * Settings Helpers
+;; * Configuration Helpers
+
+;; #+BEGIN_SRC clojure
+
+(deftest config-helpers
+  (testing "Sites"
+    (letfn [(contains-key [keys] (fn [val] (some #(= % val) keys)))]
+      (is (every? (contains-key ["code" "dissertation" "design" "docs"]) (collect-vals :sites config))))))
+;; #+END_SRC
 
 ;; #+BEGIN_SRC clojure
 (defn contains-all-keys [coll keys]
@@ -26,13 +30,14 @@
               :answer 42}]
   (is (contains-all-keys coll [:life :universe :everything]))
   (is (not (contains-all-keys coll [:42])))))
+
 ;; #+END_SRC
 
 ;; #+BEGIN_SRC clojure
 
 (deftest collection-test
   (testing "All formats present"
-    (let [supported (:supported-formats settings)]
+    (let [supported (:supported-formats config)]
   (is (every? (complement nil?) (map #(scan-format %) supported)))
   (is (every? (complement nil?) (map #(asset-key %) supported))))))
 
@@ -40,32 +45,28 @@
 
 ;; #+BEGIN_SRC clojure
 
-(deftest url-creation
-(testing "Url weaver"
-(is (= (knit-url "hello" "there") "hello/there"))
-(is (= (knit-url "hello" "there" "world") "hello/there/world"))
-(is (= (knit-url "" "hello" "there") "/hello/there")))
-(testing "Asset URL Creation"
-(is (= (dest-url "some-site" "css" "/goes/like/this") 
-"/some-site/css/goes/like/this")))
-(is (= (page-url "code" "/goes/like/this.org")
-"/code/goes/like/this.html")))
-
-
 (deftest asset-test
-    (let [source (first (collect-vals :source config))
-          asset "css"
-          asset-dir (str source "/" asset "/")
-          locs (keys (slurp-assets asset asset-dir))
-          files (vals (slurp-assets asset asset-dir))]
-      (testing "Get assets"
-        (is (if ((complement empty?) files) (every? true? (map #(.endsWith % ".css") locs)))))
-      (testing "Place Assets"
-        (is (= (get-assets "css" "code" source)
-                 {:stylesheets
-                  (zipmap (map #(str "/code/css" %) locs) files)})))))
+  (let [source (first (collect-vals :source config))
+        file-locs (keys (get-assets "css" source))
+        files (vals (get-assets "css" source))]
+  (testing "Get assets"
+    (is (if ((complement empty?) files) (every? true? (map #(.endsWith % ".css") files)))))
+(testing "Place Assets"
+(is (place-asset ("css" source "code"))
+{:stylesheets
+(map (fn [loc file] {(str "/code/css/" loc) file}))}))))
 
 ;; #+END_SRC
+
+;; #+BEGIN_SRC clojure
+
+
+
+
+
+;; #+END_SRC
+
+
 
 ;; #_(deftest transform-tests
 ;;   (testing "Org Stripping"
