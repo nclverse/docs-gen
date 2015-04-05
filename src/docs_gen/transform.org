@@ -4,22 +4,20 @@
   
 #+BEGIN_SRC clojure
 
-(ns docs-gen.view
-  (:require
-   [clj-pdf.core :as doc]
-   [clojure.java.shell :refer [sh]]
-[prone.debug :refer [debug]])
+(ns docs-gen.transform
+  (:require [prone.debug :refer [debug]])
   (:use net.cgrand.enlive-html))
 
 #+END_SRC
 
-#+BEGIN_SRC clojure
-(def doc-sites ["code" "dissertation" "design" "docs"])
-#+END_SRC
+* Layout Helpers
 
-** Helpers
+  
+** Build Drop Down
+   Builds the site dropdown
 
 #+BEGIN_SRC clojure
+
 (defn build-drop-down [site]
 (let [site (clojure.string/capitalize site)
       doc-sites (map clojure.string/capitalize doc-sites)]
@@ -32,7 +30,9 @@
                       (do-> (set-attr :href (str "/" s)) (content s))))))
 #+END_SRC
 
-*** Enlive update-attr helper
+* Enlive Helpers
+
+** Update Attribute Helper
 
 #+BEGIN_SRC clojure
 
@@ -43,8 +43,7 @@
 
 #+END_SRC
 
-
-** Transform Inline URLs
+* Transform Inline URLs
    Attach root site to inline URLs
 
 #+BEGIN_SRC clojure
@@ -67,7 +66,7 @@
     
 #+END_SRC
 
-** Navigation Helpers
+* Navigation Helpers
 #+BEGIN_SRC clojure
    
 (defn matches [k v m] (filter #(= (k %) v) m))
@@ -77,16 +76,16 @@
 
 #+END_SRC
 
-** Check for presence of all
+* Check for presence of all
 
    Duct tape functions.
 
 #+BEGIN_SRC clojure
 
-(def clean-numbering #(clojure.string/replace % #"\d+_" ""))
+(def clean-numbering #(clojure.string/replace % #"\d+-" ""))
 
 (defn format-nav-links [word]
-  (clojure.string/join " " (map clojure.string/capitalize (clojure.string/split (clean-numbering word) #"_"))))
+  (clojure.string/join " " (map clojure.string/capitalize (clojure.string/split (clean-numbering word) #"-"))))
   
 (defn rebuild-url [site s]
 (let [format #(str "/" site "/" (apply str %) ".html")]
@@ -105,19 +104,23 @@
 
 #+END_SRC
 
-** Build Subtitles
+* Build Subtitles
 
 #+BEGIN_SRC clojure
+
 (defn build-subtitles [titles title current-subtitle site]
   (let [subtitles (matches :title title titles)]
     (clone-for [s subtitles]
                [:li :a.subtitle-link] (do-> (set-attr :href (rebuild-url site s))
-                                            (if (= (:subtitle s) current-subtitle) (update-attr :class (fn [& args] (apply str (interpose " " args))) "active") identity)
+                                            (if (= (:subtitle s) current-subtitle)
+                                            (update-attr :class
+                                            (fn [& args]
+                                            (apply str (interpose " " args))) "active") identity)
                                             (content (format-nav-links (:subtitle s))
                                                      (html [:span.count (str (:count s))]))))))
 #+END_SRC
 
-** Build Titles
+* Build Titles
 
   #+BEGIN_SRC clojure
   
@@ -136,7 +139,7 @@
 
 #+END_SRC
 
-** Build Categories
+* Build Categories
 
    Selecting only the valid categories. This means that index.html in
    the root directory and such other ones without a leaf node will be omitted.
@@ -187,41 +190,7 @@
    (let [after-layout (apply str (layout site nav page))]
      (attach-root root site after-layout)))
 
-;(update-in page [:page] #(attach-root root site %)))))
- 
-
 #+END_SRC
-
-(comment 
-
-                                                                ;(if (not (empty? (:active i))) (update-attr :class (fn [& args] (apply str (interpose " " args))) (:active i)) identity))))
-
-
-(defn subtitle [x]
-  (select (html-resource (java.io.StringReader. x)) [:h2 text-node]))
-
-#_(defn nav-builder [current title link words]
-  {:title title :href link :words words :active (if (= current link) "active" "")})
-
-(defn collect-meta [])
-
-(defn non-empty [str] (not (clojure.string/blank? str)))
-
-(defn get-number [x] (if x (Integer. (or (re-find #"\d+" x) 100)) 0))
-
-(declare update-element)
-
-(defn same? [k v coll] (= v (k coll)))
-
-(defn include [item coll]
-  (let [k (first (keys item))
-        v (k item)]
-    (nil? k) coll
-    (if (same? k v coll)
-      (assoc-in coll [:children]
-                (update-element (first (:children item)) (:children coll)))
-      nil)))
-)
 
 # Local Variables:
 # lentic-init: lentic-org-clojure-init

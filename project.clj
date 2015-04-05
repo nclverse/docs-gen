@@ -11,5 +11,5 @@
                  [prone "0.8.1"]
                  [enlive "1.1.5"]]
   :plugins [[lein-ring "0.9.2"]]
-  :ring {:handler docs-gen.core/app :auto-reload? true :auto-refresh? true :reload-paths ["src" "resources"]}
+  :ring {:handler docs-gen.render/app :auto-reload? true :auto-refresh? true :reload-paths ["src" "resources"]}
   :profiles {:dev {:ring {:stacktrace-middleware prone.middleware/wrap-exceptions}}})

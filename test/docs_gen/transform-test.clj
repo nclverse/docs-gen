@@ -1,4 +1,5 @@
-(ns docs-gen.view-test
+(ns docs-gen.transform-test)
+(comment
   (:require [clojure.test :refer :all]
             [docs-gen.view :refer :all]))
 
@@ -39,3 +40,4 @@
   (testing "Presence of all"
     (is (= (has-all-keys? {:category "nil" :subtitle "this" :title "false"}) true))
     (is (= (has-all-keys? {:category "nil"}) false))))
+)
