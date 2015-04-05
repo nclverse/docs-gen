@@ -4,7 +4,7 @@ A Clojure app that generates documentation websites for NCLVerse.
 
 ## Usage
 
-Not intended for publice use. Might evolve in the future to a literate programming framework.
+Not intended for public use. Might evolve to a literate programming library in the future.
 
 ## License
 
