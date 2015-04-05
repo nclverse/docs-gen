@@ -1,14 +1,11 @@
-# blog-gen
+# Docs Generator
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure app that generates documentation websites for NCLVerse.
 
 ## Usage
 
-FIXME
+Not intended for publice use. Might evolve in the future to a literate programming framework.
 
 ## License
 
-Copyright © 2015 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Still investigating what license would work for this project.
