@@ -26,6 +26,10 @@ Enlive: Metadata collection.
    
 #+BEGIN_SRC clojure
 
+(defn back-one-directory [s]
+  (let [idx (.lastIndexOf s "/")]
+    (subs s 0 (+ idx 1))))
+
 (defn collect-vals [key config] 
 (let [vals (map key (:sites config))]
 (when (every? (complement nil?) vals) vals)))
@@ -36,29 +40,38 @@ Enlive: Metadata collection.
 
 #+BEGIN_SRC clojure
 
+(def code
+{:site "code"
+:metadata [:loc]
+:source (str (back-one-directory (System/getProperty "user.dir")) "code/source")
+})
+
+
+(def dissertation
+{:site "dissertation"
+:metadata [:word-count]
+:source (str (back-one-directory (System/getProperty "user.dir")) "dissertation/source")
+})
+
+(def design
+{:site "design"
+:metadata []
+:source (str (back-one-directory (System/getProperty "user.dir")) "design/source")
+})
+
+(def help
+{:site "help"
+:metadata [:topics]
+:source (str (back-one-directory (System/getProperty "user.dir")) "help/source")
+})
+
 (def config {
-:mode :export
+:mode :serve ;:export
 :render-mode :full
 :serve {:root "http://localhost:3000"}
 :export {:root "http://nclverse.github.io"}
  :output "/Users/Prabros/Dropbox/ncl/stage3/clojure/apps"
-:sites [
-{:site "code"
-:metadata [:loc]
- :source "/Users/Prabros/Dropbox/ncl/stage3/clojure/apps/code/source"
- }
-;{:site "thesis"
-;:metadata [:word-count]
-;:source "/Users/Prabros/Dropbox/ncl/stage3/clojure/apps/thesis/source"}
-;{:site "design"
-;:metadata []
-;:source "/Users/Prabros/Dropbox/ncl/stage3/clojure/apps/design/source"
-;}
-;{:site "help"
-;:metadata [:topics]
-;:source "/Users/Prabros/Dropbox/ncl/stage3/clojure/apps/help/source"
-;:output "/Users/Prabros/Dropbox/ncl/stage3/clojure/apps"}
-]})
+:sites [code dissertation design help]})
 
 #+END_SRC
 
@@ -162,9 +175,8 @@ Creates a map of the form:
 
 (defn nav-element [url page]
 (let [components (url-components url)
-count (loc page)
-      sites (collect-vals :site config)]
-(into components {:loc count :sites sites})))
+count (loc page)]
+(into components {:loc count})))
 
 (defn nav-builder [root site urls pages]
 (let [nav (map nav-element urls pages)]
@@ -172,9 +184,10 @@ count (loc page)
 
 (defn full-render [root site urls pages]
 (let [html-pages (map org->html pages)
+sites (collect-vals :site config)
 pages-with-meta-data (map collect-meta-data urls html-pages)
 nav (nav-builder root site urls html-pages)]
-  (map (partial transform/transform-page root site nav) pages-with-meta-data)))
+  (map (partial transform/transform-page root site sites nav) pages-with-meta-data)))
 
 (defn renderer [root site mode]
 ({:quick #(quick-render root site %1 %2)
@@ -194,7 +207,6 @@ Builds a website.
 assets))
 
 #+END_SRC
-
 
 The progression is thus.
 
@@ -226,6 +238,21 @@ The first two stages are done here.
   (stasis/export-pages (collect-files config) (:output config)))
 
 (def app (render config))
+
+(defn export-site-builder [site-map dir]
+  (stasis/export-pages (stasis/merge-page-sources (build-site (:export-root config) :full site-map)) dir))
+
+
+(defn exporter [site]
+  (if-let [site-map 
+           ({"code" code
+             "dissertation" dissertation
+             "design" design
+             "help" help}
+            site)]
+    (let [export-dir (back-one-directory (System/getProperty "user.dir"))]
+    (export-site-builder site-map export-dir)) (println "No such site")))
+
 
 #+END_SRC
 

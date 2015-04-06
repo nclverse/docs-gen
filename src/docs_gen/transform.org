@@ -19,15 +19,14 @@
 #+BEGIN_SRC clojure
 
 (defn build-drop-down [site sites]
-(let [site (clojure.string/capitalize site)
-      sites (map clojure.string/capitalize sites)]
+(let [websites (list "code" "dissertation")]
   ;Inorder to maintain site always as the first element in the row
   ;Alert: Pretty hacky
   (clone-for [s (into [site] (remove #(= % site) sites))]
              [:a] (if (= s site) (do-> (add-class "active")
                                        (set-attr :href (str "/" s))
-                                           (content s))
-                      (do-> (set-attr :href (str "/" s)) (content s))))))
+                                       (content (clojure.string/capitalize s)))
+                      (do-> (set-attr :href (str "/" s)) (content (clojure.string/capitalize s)))))))
 #+END_SRC
 
 * Enlive Helpers
@@ -181,18 +180,18 @@ URLs which have Kebab case.
 ** Sidebar
 
 #+BEGIN_SRC clojure
-(defsnippet sidebar "templates/sidebar.html" [:nav] [current-url site nav page]
+(defsnippet sidebar "templates/sidebar.html" [:nav] [current-url site sites nav page]
   [:img.site-logo] (set-attr :src "./img/logo.svg")
-  [:ul.docs-site :li] (build-drop-down site (:sites nav))
+  [:ul.docs-site :li] (build-drop-down site sites)
   [:div.category] (build-categories current-url nav site))
 #+END_SRC
 
 
 #+BEGIN_SRC clojure
 
-(deftemplate layout "templates/layout.html" [site nav page]
+(deftemplate layout "templates/layout.html" [site sites nav page]
   [:title] (content (:title (:meta page)))
-  [:#sidebar]  (content (sidebar (:url page) site nav page))
+  [:#sidebar]  (content (sidebar (:url page) site sites nav page))
   [:#container :#read-area] (content (article (:page page))))
 
 #+END_SRC
@@ -201,8 +200,8 @@ URLs which have Kebab case.
 
 #+BEGIN_SRC clojure
 
- (defn transform-page [root site nav page]
-     (attach-root root site (apply str (layout site nav page))))
+ (defn transform-page [root site sites nav page]
+     (attach-root root site (apply str (layout site sites nav page))))
 
 #+END_SRC
 

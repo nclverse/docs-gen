@@ -7,7 +7,6 @@
 (ns docs-gen.collect
   (:require [stasis.core :as stasis]
             [prone.debug :refer [debug]]))
-
 ;; #+END_SRC
 
 ;; * Settings
@@ -89,6 +88,7 @@
         org-pages (vals org-map)
         dest-urls (map #(page-url site %) source-urls)]
     (zipmap dest-urls (render-fn cleaned-urls org-pages))))
+
 
 (defn collect-all [site source-dir render-fn]
   (into {:pages (get-org-pages site source-dir render-fn)}
